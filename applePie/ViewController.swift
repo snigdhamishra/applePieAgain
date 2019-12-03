@@ -70,10 +70,18 @@ class ViewController: UIViewController {
     }
     
     func newRound() {
-        let newWord = listOfWords.removeFirst()
-        currentGame = Game(word: newWord, incorrectMovesRemaining:
-        incorrectMovesAllowed, guessedLetters: [])
-        updateUI()
+        if !listOfWords.isEmpty {
+                let newWord = listOfWords.removeFirst()
+                currentGame = Game(word: newWord,
+                incorrectMovesRemaining: incorrectMovesAllowed,
+                guessedLetters: [])
+                enableLetterButtons(true)
+                updateUI()
+            }
+        
+         else {
+                enableLetterButtons(false)
+            }
     }
     
     func updateUI() {
@@ -85,7 +93,13 @@ class ViewController: UIViewController {
        let wordWithSpacing = letters.joined(separator: " ")
        correctWordLabel.text = wordWithSpacing
        scoreLabel.text = "Wins: \(totalWins), Losses: \(totalLosses)"
-           treeImageView.image = UIImage(named: "tree \(currentGame.incorrectMovesRemaining)")
+           treeImageView.image = UIImage(named: "Tree  \(currentGame.incorrectMovesRemaining)")
    }
+    
+    func enableLetterButtons(_ enable: Bool) {
+      for button in letterButtons {
+        button.isEnabled = enable
+      }
+    }
 }
 
